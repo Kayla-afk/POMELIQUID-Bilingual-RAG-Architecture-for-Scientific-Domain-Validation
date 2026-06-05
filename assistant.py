@@ -49,7 +49,7 @@ def main():
     st.markdown("Search the *Pometia pinnata* antibacterial study.")
 
     # 3. Backend Initialization
-    TARGET_DOCUMENT = r"E:\APPLE ACADEMY 2027\Portfolio\Real-Time AI Assistant using RAG+LangChain\KTI_POMELIQUID Ekstrak Etanol Daun Matoa.pdf"
+    TARGET_DOCUMENT = "KTI_POMELIQUID Ekstrak Etanol Daun Matoa.pdf"
     vectorstore = initialize_vector_database(TARGET_DOCUMENT)
     retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
     llm = OllamaLLM(model="llama3:8b")
