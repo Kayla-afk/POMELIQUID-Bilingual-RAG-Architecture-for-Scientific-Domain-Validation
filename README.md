@@ -1,7 +1,5 @@
 # POMELIQUID: Bilingual Scientific RAG Architecture
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://pomeliquid-bilingual-rag-architecture-for-scientific-domain-va.streamlit.app/)
-
 ## Credits & Acknowledgments
 * **Software Engineering & AI Architecture:** Independently developed by Kayla Nuansa Ceria.
 * **Underlying Scientific Research:** The foundational antibacterial study and ethical clearance for the Pometia pinnata ethanol extract were jointly researched by Kayla Nuansa Ceria and Mauhibatus Syifa during high school.
