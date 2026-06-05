@@ -10,7 +10,6 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough
-from langchain_ollama import OllamaLLM
 
 # Cache the database load so it only happens once when the app starts
 @st.cache_resource
@@ -50,9 +49,20 @@ def main():
 
     # 3. Backend Initialization
     TARGET_DOCUMENT = "KTI_POMELIQUID Ekstrak Etanol Daun Matoa.pdf"
-    vectorstore = initialize_vector_database(TARGET_DOCUMENT)
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    target_path = os.path.join(script_dir, TARGET_DOCUMENT)
+    vectorstore = initialize_vector_database(target_path)
     retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
-    llm = OllamaLLM(model="llama3:8b")
+    groq_api_key = os.environ.get("GROQ_API_KEY")
+    if not groq_api_key:
+        st.error("GROQ_API_KEY is not set. Please add it in your Streamlit Cloud secrets.")
+        st.stop()
+    try:
+        from langchain_groq import ChatGroq
+        llm = ChatGroq(model="llama3-8b-8192", api_key=groq_api_key)
+    except ImportError:
+        st.error("The langchain-groq package is missing. Add `langchain-groq` to requirements.txt and redeploy.")
+        st.stop()
     
     prompt = ChatPromptTemplate.from_template(
         """You are the official Bilingual Scientific AI Assistant for the POMELIQUID research project. 
