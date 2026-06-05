@@ -9,3 +9,4 @@ langchain-ollama
 pypdf
 chromadb
 sentence-transformers
+protobuf<5.0.0
