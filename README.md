@@ -1,36 +1,49 @@
-# POMELIQUID: Bilingual RAG Architecture for Scientific Domain Validation
+# POMELIQUID: Bilingual Scientific RAG Architecture
 
-A localized, zero-hallucination Retrieval-Augmented Generation (RAG) architecture engineered to provide dynamic, bilingual (Indonesian/English) querying for the POMELIQUID scientific research and ethical-clearance documentation.
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://pomeliquid-bilingual-rag-architecture-for-scientific-domain-va.streamlit.app/)
 
-## Project Context & Attribution
+## Credits & Acknowledgments
+* **Software Engineering & AI Architecture:** Independently developed by Kayla Nuansa Ceria.
+* **Underlying Scientific Research:** The foundational antibacterial study and ethical clearance for the Pometia pinnata ethanol extract were jointly researched by Kayla Nuansa Ceria and Mauhibatus Syifa during high school.
+* **Original Concept Inspiration:** The foundational concept for the RAG implementation was inspired by the tutorial from [AmanxAI: Build a Real-Time AI Assistant using RAG & LangChain](https://amanxai.com/2025/11/18/build-a-real-time-ai-assistant-using-rag-langchain/).
 
-This project is a fusion of empirical biological research and advanced AI software engineering. To ensure absolute transparency and academic integrity, the project is divided into two distinct domains:
+## Original Concept vs. Custom Upgrades
+The original idea from AmanxAI provided a strong foundation for building a basic, local RAG pipeline using LangChain and Ollama. However, to elevate this system into a production-ready tool for scientific validation, I engineered several major architectural upgrades:
 
-### 1. The Scientific Research (The Data Domain)
-The foundational scientific data, methodology, and ethical-clearance documentation utilized in this RAG system stem from the following research:
-> **Title:** POMELIQUID: EKSTRAK ETANOL DAUN MATOA (Pometia Pinnata) SEBAGAI AGEN HAYATI ANTIBAKTERI *Aeromonas hydrophila* PADA BUDIDAYA IKAN MAS KOKI (*Carassius auratus*)
-* **Research Team:** Kayla Nuansa Ceria & Mauhibatus Syifa.
-* **Context:** This research successfully engineered an organic antibacterial formulation. The resulting document is utilized in this project with explicit permission as the closed-loop knowledge base.
+1. **Bilingual Processing Pipeline (New Feature):** Unlike the base tutorial, this system features a dynamic prompt architecture capable of automatic language detection. It seamlessly translates complex Indonesian research contexts to accurately answer queries in English, and vice versa.
+2. **Cloud API over Local LLM (Architecture Upgrade):** The original tutorial relied on local Ollama models, which limits deployment. To achieve ultra-low latency and enable seamless cloud hosting, the inference engine was rewritten to integrate the Groq API (llama3-8b-8192).
+3. **Zero-Hallucination Mandate (New Feature):** Implemented strict contextual boundaries. If the requested data is absent from the target document, the system is hard-coded to refuse the prompt, ensuring absolute scientific integrity.
+4. **Cloud-Native Deployment (Architecture Upgrade):** The local-only setup was heavily optimized for Streamlit Community Cloud, incorporating efficient dependency management and secure, environment-variable-based secrets handling.
 
-### 2. The Software Architecture (The Engineering Domain)
-* **AI Architecture & Software Engineering:** Kayla Nuansa Ceria (Solo Developer).
-* **Context:** I engineered this application to demonstrate how domain-specific AI can securely query complex, localized scientific data without relying on hallucinatory open-web models.
+## Executive Summary
+This repository contains the source code for POMELIQUID, a Real-Time AI Assistant built to validate and answer queries strictly based on scientific research regarding the antibacterial properties of Matoa leaf ethanol extract (Pometia pinnata). 
 
-## Architectural Evolution & Anti-Plagiarism Statement
+Developed as a personal engineering project in college, this application serves as the advanced technical implementation of prior high school scientific research. The system enforces strict factual grounding to prevent AI hallucinations, ensuring that all generated responses are strictly tied to the provided documentation. 
 
-The foundational logic for deploying a basic LangChain LCEL pipeline was inspired by the [AmanxAI Real-Time Assistant Framework](https://amanxai.com/2025/11/18/build-a-real-time-ai-assistant-using-rag-langchain/). 
+## Live Demo
+The system is deployed and ready for immediate evaluation without requiring local environment setup.
 
-However, open-web querying is unsafe for rigorous scientific validation due to LLM hallucination. To meet professional engineering standards, **I completely re-engineered the architecture** with the following advanced features:
+**[Access the Live Web Application Here](https://pomeliquid-bilingual-rag-architecture-for-scientific-domain-va.streamlit.app/)**
 
-1. **Closed-Loop Vectorization:** Removed the generic web-scraper and implemented a local Vector Database (ChromaDB) specifically mapped only to the POMELIQUID documentation.
-2. **True Bilingual Intelligence:** The original paper is in Indonesian. I upgraded the embedding model to `paraphrase-multilingual-MiniLM-L12-v2`, allowing the AI to mathematically understand that English queries and Indonesian text share the same semantic meaning.
-3. **Dynamic Translation Prompting:** Engineered a strict LangChain system prompt that forces the LLM to read the Indonesian context but dynamically formulate its response in the exact language the user types.
-4. **Minimalist UI Integration:** Shifted from a terminal-only script to a sleek, Streamlit-powered web interface designed with Apple's Human Interface Guidelines in mind.
+### Quick Test Prompts (Copy & Paste)
+To evaluate the retrieval and bilingual reasoning capabilities, try pasting these exact queries into the live application:
 
-## Core Technology Stack
-* **Framework:** LangChain & LangChain Expression Language (LCEL)
-* **Interface:** Streamlit
-* **Local LLM Inference:** Ollama (`llama3:8b`)
+1. **Indonesian Context Test:** "Apa kesimpulan utama dari uji antibakteri ekstrak etanol daun matoa pada penelitian ini?"
+2. **English Translation & Reasoning Test:** "What are the main findings regarding the antibacterial properties of Pometia pinnata in this study?"
+3. **Out-of-Scope Test (Hallucination Prevention):** "Bagaimana cara membuat aplikasi e-commerce?" 
+   *(The system should correctly state that this information is not covered in the POMELIQUID documentation).*
+
+## System Architecture & Tech Stack
+* **Frontend:** Streamlit 
+* **AI Framework:** LangChain Core & Community
+* **LLM Engine:** Groq API (llama3-8b-8192)
+* **Embeddings:** HuggingFace (paraphrase-multilingual-MiniLM-L12-v2)
 * **Vector Database:** ChromaDB
-* **Multilingual Embeddings:** HuggingFace (`paraphrase-multilingual-MiniLM-L12-v2`)
 * **Document Processing:** PyPDFLoader & RecursiveCharacterTextSplitter
+
+## Local Installation
+If you prefer to run the architecture locally:
+1. Clone this repository.
+2. Install the required dependencies: `pip install -r requirements.txt`
+3. Configure your environment variables securely (e.g., create a `.streamlit/secrets.toml` file for your `GROQ_API_KEY`).
+4. Execute the application: `streamlit run assistant.py`
