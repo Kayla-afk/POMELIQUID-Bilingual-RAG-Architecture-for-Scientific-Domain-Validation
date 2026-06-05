@@ -59,7 +59,7 @@ def main():
         st.stop()
     try:
         from langchain_groq import ChatGroq
-        llm = ChatGroq(model="llama3-8b-8192", api_key=groq_api_key)
+        llm = ChatGroq(model="llama-3.1-8b-instant", api_key=groq_api_key)
     except ImportError:
         st.error("The langchain-groq package is missing. Add `langchain-groq` to requirements.txt and redeploy.")
         st.stop()
@@ -95,8 +95,9 @@ def main():
     if user_query:
         with st.spinner("Extracting scientific context..."):
             response = chain.invoke(user_query)
+            
             st.markdown("### Output")
-            st.write(response)
+            st.markdown(response.content)
 
 if __name__ == "__main__":
     main()
