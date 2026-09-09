@@ -54,8 +54,11 @@ def main():
     vectorstore = initialize_vector_database(target_path)
     retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
     groq_api_key = os.environ.get("GROQ_API_KEY")
+    if not groq_api_key and hasattr(st, "secrets") and "GROQ_API_KEY" in st.secrets:
+        groq_api_key = st.secrets["GROQ_API_KEY"]
+        
     if not groq_api_key:
-        st.error("GROQ_API_KEY is not set. Please add it in your Streamlit Cloud secrets.")
+        st.error("GROQ_API_KEY is not set. Please set GROQ_API_KEY in environment variables or Streamlit Cloud secrets.")
         st.stop()
     try:
         from langchain_groq import ChatGroq
